@@ -164,6 +164,7 @@
 	import LoadingButton from '@/components/LoadingButton'
 	import NotificationButton from '@/components/NotificationButton'
 	import NotFound from '@/components/routes/NotFound'
+	import { baseUrl } from '@/utils/helpers'
 
 	import AjaxErrorHandler from '@/assets/js/errorHandler'
 	export default {
@@ -238,6 +239,7 @@
 				this.toggleMenu()
 				this.loadingLogout = true
 				this.axios.post(
+					baseUrl +
 					'/api/v1/user/' +
 					this.$store.state.username +
 					'/logout'
@@ -245,12 +247,12 @@
 					this.loadingLogout = false
 					this.$store.commit('setUsername', '')
 					this.$store.commit('setAdmin', res.data.admin)
-					this.$socket.emit('accountEvent')
+					// this.$socket.emit('accountEvent')
 					this.$router.push('/')
-				}).catch(err => {
+				}).catch(() => {
 					this.loadingLogout = false
-					this.ajaxErrorHandler(err)
 				this.axios.post(
+					baseUrl +
 					'/api/v1/user/' +
 					this.$store.state.username +
 					'/logout'
@@ -258,7 +260,7 @@
 					this.loadingLogout = false
 					this.$store.commit('setUsername', '')
 					this.$store.commit('setAdmin', res.data.admin)
-					this.$socket.emit('accountEvent')
+					// this.$socket.emit('accountEvent')
 					this.$router.push('/')
 				})
 				})
@@ -303,12 +305,12 @@
 					this.signup.errors.confirmPassword = 'Passwords must match'
 				} else {
 					this.signup.loading = true
-					this.axios.post('/api/v1/user', postParams).then(res => {
+					this.axios.post(baseUrl + '/api/v1/user', postParams).then(res => {
 						this.signup.loading = false
 						this.$store.commit('setUsername', res.data.username)
 						this.$store.commit('setAdmin', res.data.admin)
 						this.closeAccountModal()
-						this.$socket.emit('accountEvent')
+						// this.$socket.emit('accountEvent')
 					}).catch(e => {
 						this.signup.loading = false
 						this.ajaxErrorHandler(e, (error) => {
@@ -327,14 +329,14 @@
 					return
 				}
 				this.login.loading = true
-				this.axios.post(`/api/v1/user/${this.login.username}/login`, {
+				this.axios.post(baseUrl + `/api/v1/user/${this.login.username}/login`, {
 					password: this.login.password
 				}).then(res => {
 					this.login.loading = false
 					this.$store.commit('setUsername', res.data.username)
 					this.$store.commit('setAdmin', res.data.admin)
 					this.closeAccountModal()
-					this.$socket.emit('accountEvent')
+					// this.$socket.emit('accountEvent')
 					this.$router.push('/admin/contacts')
 				}).catch(e => {
 					this.login.loading = false
@@ -348,18 +350,7 @@
 			}
 		},
 		created () {
-			this.axios.get('/api/v1/settings')
-				.then(res => {
-					this.$store.commit('setSettings', res.data)
-					this.$store.dispatch('setTitle', this.$store.state.meta.title)
-				}).catch(err => {
-					if(err.response.data.errors[0].name === 'noSettings') {
-						this.$router.push('/start')
-					} else {
-						this.ajaxErrorHandler(err)
-					}
-				})
-			this.axios.get('/api/v1/category')
+			this.axios.get(baseUrl + '/api/v1/category')
 				.then(res => {
 					this.$store.commit('addCategories', res.data)
 
@@ -367,11 +358,7 @@
 					//the title of the index page
 					//but if we're on another page (i.e. title is not set)
 					//don't overwrite the title
-					if(!this.$store.state.meta.title.length && this.$route.params.category) {
-						let selectedCategory = this.$route.params.category.toUpperCase()
-						let category = this.categories.find(c => c.value === selectedCategory)
-						this.$store.dispatch('setTitle', category.name)
-					}
+					this.$store.dispatch('setTitle', 'Авторизация')
 				})
 				.catch(this.ajaxErrorHandler)
 		},

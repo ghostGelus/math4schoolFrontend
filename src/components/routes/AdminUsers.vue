@@ -66,6 +66,7 @@
 
 	import throttle from 'lodash.throttle';
 	import AjaxErrorHandler from '../../assets/js/errorHandler';
+	import { baseUrl } from '@/utils/helpers'
 
 	export default {
 		name: 'AdminUsers',
@@ -102,7 +103,7 @@
 			fetchData () {
 				if(this.offset === null) return;
 
-				let url = `/api/v1/user?
+				let url = baseUrl + `/api/v1/user?
 					sort=${this.tableSort.column}
 					&order=${this.tableSort.sort}
 					&offset=${this.offset}
@@ -130,7 +131,7 @@
 						}
 					})
 					.catch(e => {
-						this.axios.post(
+						this.axios.post( baseUrl + 
 					'/api/v1/user/' +
 					this.$store.state.username +
 					'/logout'
@@ -138,7 +139,7 @@
 					this.loadingLogout = false
 					this.$store.commit('setUsername', '')
 					this.$store.commit('setAdmin', res.data.admin)
-					this.$socket.emit('accountEvent')
+					// this.$socket.emit('accountEvent')
 					this.$router.push('/')
 				})
 						AjaxErrorHandler(this.$store)(e);
@@ -153,6 +154,7 @@
 			}
 		},
 		mounted () {
+			this.$store.dispatch('setTitle', 'Панель администратора');
 			this.fetchData();
 		},
 		watch: {

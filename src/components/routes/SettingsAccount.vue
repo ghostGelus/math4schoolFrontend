@@ -6,18 +6,16 @@
 			color='red'
 			text='Yes, delete it'
 		>
-			Are you sure you want to delete your account?
+			Вы действительно хотите удалить профиль?
 		</confirm-modal>
 
-		<div class='h1'>Account settings</div>
+		<div class='h1'>Настройки профиля</div>
 		<div>
-			<div class='h3'>Change your password</div>
-			<p class='p--condensed'>
-				For security, enter your current password
-			</p>
+			<div class='h3'>Поменяйте свой пароль</div>
+			
 			<div>
 				<fancy-input
-					placeholder='Current password'
+					placeholder='Текущий пароль'
 					v-model='password.current'
 					:error='password.errors["current password"]'
 					type='password'
@@ -25,7 +23,7 @@
 			</div>
 			<div>
 				<fancy-input
-					placeholder='New password'
+					placeholder='Новый пароль'
 					v-model='password.new'
 					:error='password.errors["new password"]'
 					type='password'
@@ -35,19 +33,18 @@
 				class='button button--green'
 				@click='savePassword'
 				:loading='password.loading'
-			>Change password</loading-button>
+			>Изменить пароль</loading-button>
 		</div>
 		<div>
-			<div class='h3 h3--margin_top'>Delete your account</div>
+			<div class='h3 h3--margin_top'>Удалить свой профиль</div>
 			<p class='p--condensed'>
-				Once this is done, your account <strong>cannot</strong> be restored <br/>
-				Your current posts however will be retained
+				Вы больше <strong>не сможете</strong> его восстановить
 			</p>
 			<loading-button
 				class='button button--red'
 				:loading='deleteAccountLoading'
 				@click='showConfirmModal = true'
-			>Delete my account</loading-button>
+			>Удалить мой профиль</loading-button>
 		</div>
 	</div>
 </template>
@@ -59,6 +56,7 @@
 
 	import AjaxErrorHandler from '../../assets/js/errorHandler'
 	import logger from '../../assets/js/logger'
+	import { baseUrl } from '@/utils/helpers'
 
 	export default {
 		name: 'settingsAccount',
@@ -103,7 +101,7 @@
 				this.password.loading = true
 
 				this.axios
-					.put('/api/v1/user/' + this.$store.state.username, {
+					.put(baseUrl + '/api/v1/user/' + this.$store.state.username, {
 						currentPassword: this.password.current,
 						newPassword: this.password.new
 					})
@@ -128,7 +126,7 @@
 				this.deleteAccountLoading = true
 
 				this.axios
-					.delete('/api/v1/user/' + this.$store.state.username)
+					.delete(baseUrl + '/api/v1/user/' + this.$store.state.username)
 					.then(() => {
 						this.deleteAccountLoading = false
 
@@ -142,7 +140,7 @@
 			}
 		},
 		mounted () {
-			this.$store.dispatch('setTitle', 'account settings')
+			this.$store.dispatch('setTitle', 'Настройки профиля')
 
 			logger('settingsAccount')
 		}

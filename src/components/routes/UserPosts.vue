@@ -38,6 +38,7 @@
 	import ThreadPostPlaceholder from '../ThreadPostPlaceholder'
 
 	import AjaxErrorHandler from '../../assets/js/errorHandler'
+	import { baseUrl } from '@/utils/helpers'
 	import logger from '../../assets/js/logger'
 
 	export default {
@@ -85,10 +86,10 @@
 			}
 		},
 		created () {
-			this.$store.dispatch('setTitle', this.$route.params.username + ' | posts')
+			this.$store.dispatch('setTitle', this.$route.params.username + ' | посты')
 
 			this.axios
-				.get(`/api/v1/user/${this.$route.params.username}?posts=true`)
+				.get(baseUrl + `/api/v1/user/${this.$route.params.username}?posts=true`)
 				.then(res => {
 					this.posts = res.data.Posts
 					this.nextURL = res.data.meta.nextURL

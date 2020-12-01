@@ -1,5 +1,5 @@
 import NProgress from 'nprogress'
-import io from 'socket.io-client'
+// import io from 'socket.io-client'
 
 window.onload = () => {
 	let div = document.createElement('div');
@@ -53,11 +53,11 @@ library.add(
 Vue.component('font-awesome-icon', FontAwesomeIcon);
 
 const Home = () => import('./components/routes/Home')
-const Index = () => import('./components/routes/Index')
+// const Index = () => import('./components/routes/Index')
 const P = () => import('./components/routes/P')
 const Start = () => import('./components/routes/Start')
-const Thread = () => import('./components/routes/Thread')
-const ThreadNew = () => import('./components/routes/ThreadNew')
+// const Thread = () => import('./components/routes/Thread')
+// const ThreadNew = () => import('./components/routes/ThreadNew')
 
 const ContactUs = () => import('./components/routes/ContactUs')
 
@@ -89,23 +89,23 @@ Vue.use(Vuetify, {
 })
 Vue.use(Toast);
 
-Vue.use({
-	install (Vue) {
-		Vue.prototype.$socket = io(process.env.NODE_ENV === 'production' ? '' : "http://localhost:3000");
-	}
-})
+// Vue.use({
+// 	install (Vue) {
+// 		Vue.prototype.$socket = io(process.env.NODE_ENV === 'production' ? '' : "http://localhost:3000");
+// 	}
+// })
 
 
 const router = new VueRouter({
 	routes: [
 		{ path: '/', component: Home },
-		{ path: '/category/:category', component: Index },
+		// { path: '/category/:category', component: Index },
 		{ path: '/p/:id', component: P },
 		{ path: '/contact-us', component: ContactUs},
 		{ path: '/start', component: Start },
-		{ path: '/thread/:slug/:id', component: Thread },
-		{ path: '/thread/:slug/:id/:post_number', name: 'thread-post', component: Thread },
-		{ path: '/thread/new', component: ThreadNew },
+		// { path: '/thread/:slug/:id', component: Thread },
+		// { path: '/thread/:slug/:id/:post_number', name: 'thread-post', component: Thread },
+		// { path: '/thread/new', component: ThreadNew },
 		{ path: '/search/:q', component: Search },
 		{ path: '/search/users/:q', component: SearchUsersThreads, name: 'search/users' },
 		{ path: '/search/threads/:q', component: SearchUsersThreads, name: 'search/threads' },

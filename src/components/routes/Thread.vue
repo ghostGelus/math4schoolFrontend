@@ -150,8 +150,10 @@
 	import MoreThreads from '../MoreThreads'
 
 	import logger from '../../assets/js/logger'
+	import { baseUrl } from '@/utils/helpers'
 
 	import throttle from 'lodash.throttle'
+	
 
 	export default {
 		name: 'Thread',
@@ -280,7 +282,7 @@
 				//Get the postNumber via api request
 				if(getPostNumber) {
 					this.axios
-						.get('/api/v1/post/' + number)
+						.get(baseUrl + '/api/v1/post/' + number)
 						.then( res => pushRoute(res.data.postNumber) )
 				} else {
 					pushRoute(number)
@@ -370,18 +372,18 @@
 
 			this.loadInitialPosts()
 			
-			this.$socket.emit('join', 'thread/' + this.$route.params.id)
-			this.$socket.on('new post', post => {
-				this.showPostNotification(post)
-				this.$store.dispatch('loadNewPostsSinceLoad', post)
-			})
+			// this.$socket.emit('join', 'thread/' + this.$route.params.id)
+			// this.$socket.on('new post', post => {
+			// 	this.showPostNotification(post)
+			// 	this.$store.dispatch('loadNewPostsSinceLoad', post)
+			// })
 
 			logger('thread', this.$route.params.id)
-		},
-		destroyed () {
-			this.$socket.emit('leave', 'thread/' + this.$route.params.id)
-			this.$socket.off('new post')
 		}
+		// destroyed () {
+		// 	this.$socket.emit('leave', 'thread/' + this.$route.params.id)
+		// 	this.$socket.off('new post')
+		// }
 	}
 </script>
 

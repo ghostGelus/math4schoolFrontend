@@ -103,6 +103,7 @@
 	import LoadingButton from '../LoadingButton'
 
 	import AjaxErrorHandler from '../../assets/js/errorHandler'
+	import { baseUrl } from '@/utils/helpers'
 
 	export default {
 		name: 'start',
@@ -172,7 +173,7 @@
 					return;
 				}
 
-				let req = this.axios.post('/api/v1/user', {
+				let req = this.axios.post(baseUrl + '/api/v1/user', {
 					username: this.username,
 					password: this.password,
 					admin: true
@@ -196,7 +197,7 @@
 
 				this.loading = true
 
-				let settingsReq = this.axios.put('/api/v1/settings', {
+				let settingsReq = this.axios.put(baseUrl + '/api/v1/settings', {
 					forumName: this.forumName,
 					forumDescription: this.forumDescription
 				})
@@ -217,7 +218,7 @@
 
 				this.loading = true
 
-				this.axios.post('/api/v1/category', {
+				this.axios.post(baseUrl + '/api/v1/category', {
 					name: this.category.trim()
 				}).then(res => {
 					this.loading = false

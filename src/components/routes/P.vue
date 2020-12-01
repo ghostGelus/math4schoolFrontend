@@ -5,6 +5,7 @@
 
 <script>
 	import AjaxErrorHandler from '../../assets/js/errorHandler'
+	import { baseUrl } from '@/utils/helpers'
 	
 	export default {
 		name: 'P',
@@ -13,7 +14,7 @@
 				let id = this.$route.params.id
 
 				this.axios
-					.get('/api/v1/post/' + id)
+					.get(baseUrl + '/api/v1/post/' + id)
 					.then((res) => {
 						this.$router.push(
 							`/thread/${res.data.Thread.slug}/${res.data.Thread.id}/${res.data.postNumber}`

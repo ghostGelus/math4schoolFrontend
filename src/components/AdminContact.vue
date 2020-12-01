@@ -43,6 +43,7 @@
 <script>
 import throttle from "lodash.throttle";
 import AjaxErrorHandler from "../assets/js/errorHandler";
+import { baseUrl } from '@/utils/helpers'
 
 export default {
   name: "AdminUsers",
@@ -57,7 +58,7 @@ export default {
   },
   methods: {
     fetchData() {
-      let url = `http://localhost:3000/api/v1/contact/${this.$route.params.id}`;
+      let url = baseUrl + `/api/v1/contact/${this.$route.params.id}`;
 
       this.loading = true;
       this.axios
@@ -94,7 +95,7 @@ export default {
   },
   created() {
     this.axios
-      .get(`/api/v1/contact/${this.$route.params.id}`)
+      .get(baseUrl + `/api/v1/contact/${this.$route.params.id}`)
       .then(res => (this.contact = res.data))
       .catch(e => {
         let invalidId = e.response.data.errors.find(error => {
@@ -107,6 +108,9 @@ export default {
           AjaxErrorHandler(this.$store)(e);
         }
       });
+  },
+  mounted () {
+    this.$store.dispatch('setTitle', 'Панель администратора');
   },
   watch: {
     tableSort: "resetFetchData",

@@ -32,6 +32,7 @@
 
 <script>
 	import AjaxErrorHandler from '../../assets/js/errorHandler'
+	import { baseUrl } from '@/utils/helpers'
 
 	export default {
 		name: 'user',
@@ -86,7 +87,7 @@
 			this.selected = this.getIndexFromRoute(this.$route.path)
 
 			this.axios
-				.get(`/api/v1/user/${this.$route.params.username}`)
+				.get(baseUrl + `/api/v1/user/${this.$route.params.username}`)
 				.then(res => this.user = res.data)
 				.catch(e => {
 					let invalidId = e.response.data.errors.find(error => {

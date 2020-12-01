@@ -109,6 +109,7 @@
 
 	import AjaxErrorHandler from '../../assets/js/errorHandler'
 	import logger from '../../assets/js/logger'
+	import { baseUrl } from '@/utils/helpers'
 	
 	export default {
 		name: 'ThreadNew',
@@ -213,7 +214,7 @@
 
 				this.loading = true
 
-				this.axios.post('/api/v1/thread', {
+				this.axios.post(baseUrl + '/api/v1/thread', {
 					name: this.name,
 					category: this.selectedCategory
 				}).then(res => {
@@ -221,7 +222,7 @@
 
 					let ajax = []
 					ajax.push(
-						this.axios.post('/api/v1/post', {
+						this.axios.post(baseUrl + '/api/v1/post', {
 							threadId: res.data.id,
 							content: this.editor,
 							mentions: this.mentions
@@ -230,7 +231,7 @@
 
 					if(this.showPoll) {
 						ajax.push(
-							this.axios.post('/api/v1/poll', {
+							this.axios.post(baseUrl + '/api/v1/poll', {
 								question: this.pollQuestion,
 								answers: this.pollAnswers.map(a => a.answer),
 								threadId: res.data.id

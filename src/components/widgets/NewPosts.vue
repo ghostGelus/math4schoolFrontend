@@ -24,6 +24,7 @@
 	import LoadingIcon from '../LoadingIcon'
 
 	import AjaxErrorHandler from '../../assets/js/errorHandler'
+	import { baseUrl } from '@/utils/helpers'
 
 	export default {
 		name: 'NewPosts',
@@ -37,7 +38,7 @@
 		},
 		created () {
 			this.axios
-				.get('/api/v1/log/new-thread')
+				.get(baseUrl + '/api/v1/log/new-thread')
 				.then(res => {
 					this.count = res.data.count
 					this.change = res.data.change

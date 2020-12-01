@@ -11,6 +11,7 @@
 	import LineChart from './LineChart'
 
 	import AjaxErrorHandler from '../../assets/js/errorHandler'
+	import { baseUrl } from '@/utils/helpers'
 
 	export default {
 		name: 'PageViewsChart',
@@ -22,7 +23,7 @@
 		},
 		mounted () {
 			this.axios
-				.get('/api/v1/log/page-views')
+				.get(baseUrl + '/api/v1/log/page-views')
 				.then(res => {
 					this.points = res.data.map(d => {
 						d.date = new Date(d.date)

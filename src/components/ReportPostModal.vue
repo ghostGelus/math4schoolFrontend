@@ -19,6 +19,7 @@
 	import SelectButton from './SelectButton'
 
 	import AjaxErrorHandler from '../assets/js/errorHandler'
+	import { baseUrl } from '@/utils/helpers'
 
 	export default {
 		name: 'ReportPostModal',
@@ -50,7 +51,7 @@
 					this.loading  = true
 
 					this.axios
-						.post('/api/v1/report', {
+						.post(baseUrl + '/api/v1/report', {
 							postId: this.postId,
 							reason: this.selectedOption
 						})

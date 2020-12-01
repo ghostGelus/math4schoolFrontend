@@ -35,6 +35,7 @@
 <script>
 	import LoadingIcon from '../LoadingIcon'
 	import AjaxErrorHandler from '../../assets/js/errorHandler'
+	import { baseUrl } from '@/utils/helpers'
 	import * as d3 from 'd3'
 
 	export default {
@@ -125,7 +126,7 @@
 			window.addEventListener('resize', this.updateFuncs)
 
 			this.axios
-				.get('/api/v1/log/categories')
+				.get(baseUrl + '/api/v1/log/categories')
 				.then(res => {
 					this.data = res.data
 					this.updateFuncs()

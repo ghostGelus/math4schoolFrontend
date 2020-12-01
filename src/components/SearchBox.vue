@@ -115,6 +115,7 @@
 	import AvatarIcon from './AvatarIcon';
 
 	import AjaxErrorHandler from '../assets/js/errorHandler'
+	import { baseUrl } from '@/utils/helpers'
 
 	export default {
 		name: 'SearchBox',
@@ -296,7 +297,7 @@
 				this.users = [];
 
 				this.axios
-					.get('/api/v1/search/thread?q=' + q)
+					.get(baseUrl + '/api/v1/search/thread?q=' + q)
 					.then(res => {
 						this.threads = res.data.threads.slice(0, 3);
 						this.loading = false;
@@ -304,7 +305,7 @@
 					.catch(AjaxErrorHandler(this.$store));
 
 				this.axios
-					.get('/api/v1/search/user?q=' + q)
+					.get(baseUrl + '/api/v1/search/user?q=' + q)
 					.then(res => {
 						this.users = res.data.users.slice(0, 5);
 						this.loading = false;

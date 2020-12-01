@@ -66,6 +66,7 @@
 
 	import throttle from 'lodash.throttle';
 	import AjaxErrorHandler from '../../assets/js/errorHandler';
+	import { baseUrl } from '@/utils/helpers'
 
 	export default {
 		name: 'AdminUsers',
@@ -100,7 +101,7 @@
 			fetchData () {
 				if(this.offset === null) return;
 
-				let url = `http://localhost:3000/api/v1/contact?
+				let url = baseUrl + `/api/v1/contact?
 					&order=${this.tableSort.sort}
 					&offset=${this.offset}
 				`;
@@ -128,7 +129,7 @@
 			deleteContact (contactId) {
 				this.loading = true;
 				this.axios
-					.post(`/api/v1/contact/delete/${contactId}`)
+					.post(baseUrl + `/api/v1/contact/delete/${contactId}`)
 					.then(() => {
 						this.contacts = this.contacts.filter(
           contact => contact.id !== contactId
@@ -149,6 +150,7 @@
 		},
 		mounted () {
 			this.fetchData();
+			this.$store.dispatch('setTitle', 'Панель администратора');
 		},
 		watch: {
 			tableSort: 'resetFetchData',

@@ -34,6 +34,7 @@
 	import ThreadDisplayPlaceholder from '../ThreadDisplayPlaceholder'
 
 	import AjaxErrorHandler from '../../assets/js/errorHandler'
+	import { baseUrl } from '@/utils/helpers'
 	import logger from '../../assets/js/logger'
 
 	export default {
@@ -77,10 +78,10 @@
 			}
 		},
 		created () {
-			this.$store.dispatch('setTitle', this.$route.params.username + ' | threads')
+			this.$store.dispatch('setTitle', this.$route.params.username + ' | треды')
 
 			this.axios
-				.get(`/api/v1/user/${this.$route.params.username}?threads=true`)
+				.get(baseUrl + `/api/v1/user/${this.$route.params.username}?threads=true`)
 				.then(res => {
 					this.threads = res.data.Threads
 					this.nextURL = res.data.meta.nextURL

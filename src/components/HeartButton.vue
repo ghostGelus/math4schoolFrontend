@@ -44,6 +44,7 @@
 	import AvatarIcon from './AvatarIcon'
 
 	import AjaxErrorHandler from '../assets/js/errorHandler'
+	import { baseUrl } from '@/utils/helpers'
 
 	export default {
 		name: 'HeartButton',
@@ -97,10 +98,10 @@
 
 				if(!this.liked) {
 					this.axios
-						.put('/api/v1/post/' + id + '/like')
+						.put(baseUrl + '/api/v1/post/' + id + '/like')
 						.then(() => {
 							return this.axios
-								.get('/api/v1/user/' + this.$store.state.username)
+								.get(baseUrl + '/api/v1/user/' + this.$store.state.username)
 						})
 						.then(res => {
 							this.likes.push(res.data)
@@ -108,7 +109,7 @@
 						.catch(AjaxErrorHandler(this.$store))
 				} else {
 					this.axios
-						.delete('/api/v1/post/' + id + '/like')	
+						.delete(baseUrl + '/api/v1/post/' + id + '/like')	
 						.then(() => {
 							this.likes.splice(this.getIndexOfUser(), 1)
 						})

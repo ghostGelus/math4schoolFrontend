@@ -45,7 +45,7 @@ export default new Vuex.Store({
 		},
 		title (state) {
 			if(state.meta.title.trim().length) {
-				return state.meta.name + ' | ' + state.meta.title
+				return state.meta.title
 			} else {
 				return state.meta.name
 			}

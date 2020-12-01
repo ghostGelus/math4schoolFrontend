@@ -53,6 +53,7 @@
 <script>
 	import InfoTooltip from './InfoTooltip'
 	import AjaxErrorHandler from '../assets/js/errorHandler'
+	import { baseUrl } from '@/utils/helpers'
 
 	export default {
 		name: 'AvatarIcon',
@@ -97,7 +98,7 @@
 				if(this.userData || this.user === null) return;
 
 				this.axios
-					.get('/api/v1/user/' + this.proxyUser.username)
+					.get(baseUrl + '/api/v1/user/' + this.proxyUser.username)
 					.then((res) => {
 						this.userData = res.data;
 					})

@@ -46,6 +46,7 @@
 	import LoadingButton from './LoadingButton'
 
 	import AjaxErrorHandler from '../assets/js/errorHandler'
+	import { baseUrl } from '@/utils/helpers'
 
 	export default {
 		name: 'AdminNewAdmin',
@@ -60,7 +61,7 @@
 			},
 			getLink () {
 				this.axios
-					.post('http://localhost:3000/api/v1/admin_token')
+					.post(baseUrl + '/api/v1/admin_token')
 					.then(res => {
 						this.link = window.location.origin + '/?token=' + res.data.token
 						this.toggleModal()
@@ -89,7 +90,7 @@
 		},
 		created () {
 			this.axios
-				.get('/api/v1/user?role=admin')
+				.get(baseUrl + '/api/v1/user?role=admin')
 				.then(res => {
 					this.admins = res.data
 				})

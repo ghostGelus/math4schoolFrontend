@@ -24,7 +24,7 @@
         OK
       </button>
     </modal-window>
-    <modal-window
+    <!-- <modal-window
       v-model="showAccountModal"
       @input="closeAccountModal"
       :no-padding="true"
@@ -74,7 +74,7 @@
           </form>
         </template>
       </tab-view>
-    </modal-window>
+    </modal-window> -->
 
     <header class="header">
       <div class="header__group">
@@ -100,11 +100,6 @@
             Выход
           </loading-button>
         </template>
-        <template v-else>
-          <div class="button button--thin_text" @click="showAccountModalTab(0)">
-            Login
-          </div>
-        </template>
       </div>
       <div
         class="header__overlay"
@@ -121,18 +116,19 @@
 
 <script>
 import ModalWindow from "./ModalWindow";
-import FancyInput from "./FancyInput";
-import TabView from "./TabView";
+// import FancyInput from "./FancyInput";
+// import TabView from "./TabView";
 import LoadingButton from "./LoadingButton";
 import NotFound from "./routes/NotFound";
 
 import AjaxErrorHandler from ".././assets/js/errorHandler";
+import { baseUrl } from '@/utils/helpers'
 export default {
   name: "app",
   components: {
     ModalWindow,
-    TabView,
-    FancyInput,
+    // TabView,
+    // FancyInput,
     LoadingButton,
     NotFound
   },
@@ -208,12 +204,12 @@ export default {
       this.toggleMenu();
       this.loadingLogout = true;
       this.axios
-        .post("/api/v1/user/" + this.$store.state.username + "/logout")
+        .post(baseUrl + "/api/v1/user/" + this.$store.state.username + "/logout")
         .then(res => {
           this.loadingLogout = false;
           this.$store.commit("setUsername", "");
           this.$store.commit("setAdmin", res.data.admin);
-          this.$socket.emit("accountEvent");
+          // this.$socket.emit("accountEvent");
           this.$router.push("/");
         })
         .catch(err => {
@@ -262,13 +258,13 @@ export default {
       } else {
         this.signup.loading = true;
         this.axios
-          .post("/api/v1/user", postParams)
+          .post(baseUrl + "/api/v1/user", postParams)
           .then(res => {
             this.signup.loading = false;
             this.$store.commit("setUsername", res.data.username);
             this.$store.commit("setAdmin", res.data.admin);
             this.closeAccountModal();
-            this.$socket.emit("accountEvent");
+            // this.$socket.emit("accountEvent");
           })
           .catch(e => {
             this.signup.loading = false;
@@ -292,7 +288,7 @@ export default {
       }
       this.login.loading = true;
       this.axios
-        .post(`/api/v1/user/${this.login.username}/login`, {
+        .post(baseUrl + `/api/v1/user/${this.login.username}/login`, {
           password: this.login.password
         })
         .then(res => {
@@ -300,7 +296,7 @@ export default {
           this.$store.commit("setUsername", res.data.username);
           this.$store.commit("setAdmin", res.data.admin);
           this.closeAccountModal();
-          this.$socket.emit("accountEvent");
+          // this.$socket.emit("accountEvent");
           this.$router.push("/admin/contacts");
         })
         .catch(e => {
@@ -319,7 +315,7 @@ export default {
   },
   created() {
     this.axios
-      .get("/api/v1/settings")
+      .get(baseUrl + "/api/v1/settings")
       .then(res => {
         this.$store.commit("setSettings", res.data);
         this.$store.dispatch("setTitle", this.$store.state.meta.title);
@@ -328,7 +324,7 @@ export default {
         this.ajaxErrorHandler(err);
       });
     this.axios
-      .get("/api/v1/category")
+      .get(baseUrl + "/api/v1/category")
       .then(res => {
         this.$store.commit("addCategories", res.data);
         if (

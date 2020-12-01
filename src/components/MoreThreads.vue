@@ -23,6 +23,7 @@
 
 <script>
 	import AjaxErrorHandler from '../assets/js/errorHandler'
+	import { baseUrl } from '@/utils/helpers'
 
 	export default {
 		name: 'MoreThreads',
@@ -37,7 +38,7 @@
 		},
 		mounted () {
 			this.axios
-				.get('/api/v1/category/' + this.category.value)
+				.get(baseUrl + '/api/v1/category/' + this.category.value)
 				.then(res => {
 					let filtered = res.data.Threads.filter(thread => {
 						return thread.id !== this.threadId

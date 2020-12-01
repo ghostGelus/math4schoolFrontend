@@ -8,8 +8,10 @@
           href="/branding"
           class="navbar-brand navbar-brand logo-light"
           target="_self"
-          ><img src="/img/light-logo.d076693f.png" alt="logo"
-        /></a>
+          >
+          <!-- <img src="/img/light-logo.d076693f.png" alt="logo"
+        /> -->
+        </a>
         <div
           href="/"
           style="    padding: 30px 15px;"
@@ -469,10 +471,12 @@
 <script>
 import VueFaqAccordion from "../VueFaqAccordion";
 import { VueAgile } from "vue-agile";
+import { baseUrl } from '@/utils/helpers'
 
 export default {
   mounted() {
     window.scrollTo(0, 0);
+    this.$store.dispatch('setTitle', 'Математика с Факультетом безопасности');
   },
   components: {
     VueFaqAccordion,
@@ -581,7 +585,7 @@ export default {
         message: this.contact.message
       };
       this.axios
-        .post("/api/v1/contact", postParams)
+        .post(baseUrl + "/api/v1/contact", postParams)
         .then(
           (this.contact.name = ""),
           (this.contact.lastname = ""),

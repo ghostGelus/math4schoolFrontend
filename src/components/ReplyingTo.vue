@@ -22,6 +22,7 @@
 <script>
 	import InfoTooltip from './InfoTooltip'
 	import AjaxErrorHandler from '../assets/js/errorHandler'
+	import { baseUrl } from '@/utils/helpers'
 
 	export default {
 		name: 'ReplyingTo',
@@ -46,7 +47,7 @@
 				if(this.post) return
 
 				this.axios
-					.get('/api/v1/post/' + this.replyId)
+					.get(baseUrl + '/api/v1/post/' + this.replyId)
 					.then((res) => {
 						this.post = res.data
 					})

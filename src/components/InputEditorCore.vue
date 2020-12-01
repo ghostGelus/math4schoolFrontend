@@ -92,6 +92,7 @@
 	import ModalWindow from './ModalWindow'
 	import FancyInput from './FancyInput'
 	import EmojiSelector from './EmojiSelector'
+	import { baseUrl } from '@/utils/helpers'
 
 	let usernames = {}
 
@@ -154,7 +155,7 @@
 					cb(checkedUsername)
 				} else if(checkedUsername === undefined) {				
 					this.axios
-						.get('/api/v1/user/' + username)
+						.get(baseUrl + '/api/v1/user/' + username)
 						.then(() => {
 							usernames[username] = username
 							cb(username)

@@ -21,7 +21,7 @@
 				}'
 				@click='setSelected(sort)'
 			>
-				{{sort === 'asc' ? 'Ascending' : 'Descending'}}
+				{{sort === 'asc' ? 'По возрастанию' : 'По убыванию'}}
 			</div>
 		</template>
 	</menu-tooltip>

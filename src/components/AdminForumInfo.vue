@@ -63,7 +63,7 @@
 
 				this.loading = true
 
-				let settingsReq = this.axios.put('/api/v1/settings', {
+				let settingsReq = this.axios.put(baseUrl + '/api/v1/settings', {
 					forumName: this.name,
 					forumDescription: this.description || '',
 					showDescription: this.showDescription
@@ -88,21 +88,8 @@
 		},
 		mounted () {
 			this.axios
-				.get('/api/v1/settings')
+				.get(baseUrl + '/api/v1/settings')
 				.then(res => {
-					this.siteName = res.data.siteName || ''
-					this.siteName = res.data.siteName || ''
-					this.siteName = res.data.siteName || ''
-					this.siteName = res.data.siteName || ''
-					this.siteName = res.data.siteName || ''
-					this.siteName = res.data.siteName || ''
-					this.siteName = res.data.siteName || ''
-					this.siteName = res.data.siteName || ''
-					this.siteName = res.data.siteName || ''
-					this.siteName = res.data.siteName || ''
-					this.siteName = res.data.siteName || ''
-					this.siteName = res.data.siteName || ''
-					this.siteName = res.data.siteName || ''
 					this.description = res.data.forumDescription || ''
 					this.showDescription = res.data.showDescription
 				})

@@ -5,7 +5,7 @@
 		</div>
 		<div slot='footer'>
 			<button class='button button--modal' :class='buttonColor' @click='confirm'>{{text || 'OK'}}</button>
-			<button class='button button--modal' @click='setShowModal(false)'>Cancel</button>
+			<button class='button button--modal' @click='setShowModal(false)'>Отмена</button>
 		</div>
 	</modal-window>
 </template>

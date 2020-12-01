@@ -77,6 +77,7 @@
 
 	import AjaxErrorHandler from '../../assets/js/errorHandler'
 	import logger from '../../assets/js/logger'
+	import { baseUrl } from '@/utils/helpers'
 
 	export default {
 		name: 'Search',
@@ -122,7 +123,7 @@
 				this.$store.dispatch('setTitle', 'Search | ' + this.$route.params.q)
 			
 				this.axios
-					.get(`/api/v1/search/${this.searchType.slice(0, -1)}?q=${this.$route.params.q}`)
+					.get(baseUrl + `/api/v1/search/${this.searchType.slice(0, -1)}?q=${this.$route.params.q}`)
 					.then(res => {
 						this.results = res.data[this.searchType]
 						this.next = res.data.next
@@ -136,7 +137,7 @@
 				this.loading = true
 
 				this.axios
-					.get(
+					.get(baseUrl + 
 						`/api/v1/search/${this.searchType.slice(0, -1)}?q=${this.$route.params.q}&offset=${this.offset}`
 					)
 					.then(res => {

@@ -33,6 +33,7 @@
 	import LoadingIcon from '../LoadingIcon'
 
 	import AjaxErrorHandler from '../../assets/js/errorHandler'
+	import { baseUrl } from '@/utils/helpers'
 
 	export default {
 		name: 'TopPosts',
@@ -72,7 +73,7 @@
 		},
 		created () {
 			this.axios
-				.get('/api/v1/log/top-threads')
+				.get(baseUrl + '/api/v1/log/top-threads')
 				.then(res => {
 					this.data_ = res.data
 					this.loading = false

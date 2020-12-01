@@ -1,7 +1,7 @@
 <template>
 	<div class='route_container route_container--settings'>
 		<div class='settings_menu'>
-			<div class='settings_menu__title'>settings</div>
+			<div class='settings_menu__title'>настройки</div>
 			<div class='settings_menu__items'>
 				<div
 					class='settings_menu__item'
@@ -27,8 +27,8 @@
 		data () {
 			return {
 				menuItems: [
-					{ name: 'General', route: 'general', icon: 'cog' },
-					{ name: 'Account', route: 'account', icon: 'lock'},
+					{ name: 'Основные', route: 'general', icon: 'cog' },
+					{ name: 'Профиль', route: 'account', icon: 'lock'},
 				],
 				selected: 0
 			}

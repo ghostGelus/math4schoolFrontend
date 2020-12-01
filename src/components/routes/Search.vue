@@ -69,6 +69,7 @@
 
 	import AjaxErrorHandler from '../../assets/js/errorHandler'
 	import logger from '../../assets/js/logger'
+	import { baseUrl } from '@/utils/helpers'
 
 	export default {
 		name: 'Search',
@@ -103,7 +104,7 @@
 				this.loadingUsers = true;
 
 				this.axios
-					.get('/api/v1/search/user?q=' + this.$route.params.q)
+					.get(baseUrl + '/api/v1/search/user?q=' + this.$route.params.q)
 					.then(res => {
 						this.loadingUsers = false;
 						this.users = res.data.users;
@@ -114,7 +115,7 @@
 				this.loadingThreads = true;
 
 				this.axios
-					.get('/api/v1/search/thread?q=' + this.$route.params.q)
+					.get(baseUrl + '/api/v1/search/thread?q=' + this.$route.params.q)
 					.then(res => {
 						this.loadingThreads = false;
 						this.threads = res.data.threads;

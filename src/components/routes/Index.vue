@@ -98,6 +98,7 @@
 
 	import AjaxErrorHandler from '../../assets/js/errorHandler'
 	import logger from '../../assets/js/logger'
+	import { baseUrl } from '@/utils/helpers'
 
 	export default {
 		name: 'index',
@@ -188,7 +189,7 @@
 			getThreads (initial) {
 				if(this.nextURL === null && !initial) return
 
-				let URL = '/api/v1/category/' + this.selectedCategory
+				let URL = baseUrl + '/api/v1/category/' + this.selectedCategory
 				if(!initial) {
 					URL = this.nextURL || URL
 				}
@@ -219,7 +220,7 @@
 				this.loadingNewer = true
 
 				this.axios
-					.get('/api/v1/category/' + this.selectedCategory + '?limit=' + this.newThreads)
+					.get(baseUrl + '/api/v1/category/' + this.selectedCategory + '?limit=' + this.newThreads)
 					.then(res => {
 						this.loadingNewer = false
 						this.newThreads = 0
@@ -246,12 +247,12 @@
 			this.selectedCategory = this.$route.path.split('/')[2].toUpperCase()
 			this.getThreads(true)
 
-			this.$socket.emit('join', 'index')
-			this.$socket.on('new thread', data => {
-				if(data.value === this.selectedCategory || this.selectedCategory == 'ALL') {
-					this.newThreads++
-				}
-			})
+			// this.$socket.emit('join', 'index')
+			// this.$socket.on('new thread', data => {
+			// 	if(data.value === this.selectedCategory || this.selectedCategory == 'ALL') {
+			// 		this.newThreads++
+			// 	}
+			// })
 
 			if(this.$route.query.token) {
 				this.$store.commit('setToken', this.$route.query.token)
@@ -262,8 +263,8 @@
 			logger('index')
 		},
 		destroyed () {
-			this.$socket.emit('leave', 'index')
-			this.$socket.off('new thread')
+			// this.$socket.emit('leave', 'index')
+			// this.$socket.off('new thread')
 		}
 	}
 </script>

@@ -4,9 +4,9 @@
 			v-model='picture.showRemoveProfilePictureModal'
 			@confirm='removeProfilePicture'
 			color='red'
-			text='Yes, remove it'
+			text='Да, удалить'
 		>
-			Are you sure you want to remove your profile picture?
+			Вы уверены, что хотите удалить фотографию в профиле?
 		</confirm-modal>
 
 		<modal-window
@@ -24,12 +24,12 @@
 				@drkgleave='picture.dragging = false'
 				@drop='handleFileDrop'
 			>
-				<div class='h3'>Add a profile picture</div>
+				<div class='h3'>Добавление изображение профиля</div>
 				<p class='p--condensed'>
-					Drag and drop an image or
+					Перетащите изображение или
 					<label class='button profile_picture_modal__upload_button'>
 						<input type='file' accept='image/*' @change='processImage($event.target.files[0])'>
-						upload a file
+						Загрузите файл
 					</label>
 				</p>
 				<div class='profile_picture_modal__drag_area'>
@@ -53,17 +53,17 @@
 					:class='{ "button--disabled": !picture.dataURL }'
 					@click='uploadProfilePicture'
 				>
-					Upload picture
+					Загрузить изображение
 				</button>
-				<button class='button button--modal' @click='hideProflePictureModal'>Cancel</button>
+				<button class='button button--modal' @click='hideProflePictureModal'>Отмена</button>
 			</div>
 		</modal-window>
 
-		<div class='h1'>General settings</div>
+		<div class='h1'>Основные настройки</div>
 		<div>
-			<div class='h3'>About me</div>
+			<div class='h3'>Информация</div>
 			<p class='p--condensed'>
-				Write something about yourself to be displayed on your user page
+				Напишите что-нибудь о себе
 			</p>
 			<fancy-textarea
 				placeholder='About me description'
@@ -76,13 +76,13 @@
 				:loading='description.loading'
 				@click='saveDescription'
 			>
-				Save description
+				Сохранить описание
 			</loading-button>
 		</div>
 		<div>
-			<div class='h3'>Profile picture</div>
+			<div class='h3'>Изображение профиля</div>
 			<p class='p--condensed'>
-				This will be displayed by your posts on the site
+				Это будет отображаться в вашем профиле
 			</p>
 			<p
 				class='p--condensed profile_picture_preview picture_circle'
@@ -90,7 +90,7 @@
 				v-if='picture.current'
 			></p>
 			<button class='button' @click='picture.showProfilePictureModal = true'>
-				{{picture.current ? "Change" : "Add" }} profile picture
+				{{picture.current ? "Изменить" : "Добавить" }} изображение профиля
 			</button>
 			<button
 				v-if='picture.current'
@@ -98,7 +98,7 @@
 				style='margin-left: 0.5rem;'
 				@click='picture.showRemoveProfilePictureModal = true'
 			>
-				Remove
+				Удалить
 			</button>
 		</div>
 	</div>
@@ -112,6 +112,7 @@
 
 	import AjaxErrorHandler from '../../assets/js/errorHandler'
 	import logger from '../../assets/js/logger'
+	import { baseUrl } from '@/utils/helpers'
 
 	export default {
 		name: 'settingsGeneral',
@@ -147,7 +148,7 @@
 				this.description.loading = true
 
 				this.axios
-					.put('/api/v1/user/' + this.$store.state.username, {
+					.put(baseUrl + '/api/v1/user/' + this.$store.state.username, {
 						description: this.description.value
 					})
 					.then(() => {
@@ -168,7 +169,7 @@
 				formData.append('picture', this.picture.file)
 
 				this.axios
-					.post('/api/v1/user/' + this.$store.state.username + '/picture', formData, {
+					.post(baseUrl + '/api/v1/user/' + this.$store.state.username + '/picture', formData, {
 						headers: {
 							'Content-Type': 'multipart/form-data'
 						}
@@ -186,7 +187,7 @@
 			},
 			removeProfilePicture () {
 				this.axios
-					.delete('/api/v1/user/' + this.$store.state.username + '/picture')
+					.delete(baseUrl + '/api/v1/user/' + this.$store.state.username + '/picture')
 					.then(() => {
 						this.picture.current = null
 					})
@@ -233,7 +234,7 @@
 
 			this.$nextTick(() => {
 				this.axios
-					.get('/api/v1/user/' + this.$store.state.username)
+					.get(baseUrl + '/api/v1/user/' + this.$store.state.username)
 					.then(res => {
 						this.description.value = res.data.description || ''
 						this.picture.current = res.data.picture

@@ -73,6 +73,7 @@
 
 <script>
 	import AjaxErrorHandler from '../assets/js/errorHandler'
+	import { baseUrl } from '@/utils/helpers'
 
 	export default {
 		name: 'NotificationButton',
@@ -127,7 +128,7 @@
 			},
 			getNotifications () {
 				this.axios
-					.get('/api/v1/notification')
+					.get(baseUrl + '/api/v1/notification')
 					.then(res => {
 						this.notifications = res.data.Notifications
 						this.unreadCount = res.data.unreadCount
@@ -136,7 +137,7 @@
 			},
 			resetUnreadCount () {
 				this.axios
-					.put('/api/v1/notification')
+					.put(baseUrl + '/api/v1/notification')
 					.then(() => {
 						this.unreadCount = 0
 					})
@@ -146,7 +147,7 @@
 				let index = this.getIndexById(id)
 
 				this.axios
-					.delete('/api/v1/notification/' + id)
+					.delete(baseUrl + '/api/v1/notification/' + id)
 					.then(() => {
 						this.notifications.splice(index, 1)
 					})
@@ -157,7 +158,7 @@
 				let item = this.notifications[index]
 
 				this.axios
-					.put('/api/v1/notification/' + id)
+					.put(baseUrl + '/api/v1/notification/' + id)
 					.then(() => {
 						this.$set(
 							this.notifications,
@@ -182,7 +183,7 @@
 			}
 		},
 		created () {
-			if(this.$store.state.username) this.getNotifications()
+			// if(this.$store.state.username) this.getNotifications()
 
 			this.$socket.on('notification', notification => {
 				this.unreadCount++
